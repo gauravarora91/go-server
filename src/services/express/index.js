@@ -9,8 +9,9 @@ import { env } from '../../config'
 
 export default (routes) => {
   const app = express()
+  app.use(express.static('public'))
 
-  app.use('/', express.static('public'))
+  //app.use('/', express.static(path.join(__dirname, 'public')))
 
   /* istanbul ignore next */
   if (env === 'production' || env === 'development') {
