@@ -10,6 +10,8 @@ import { env } from '../../config'
 export default (routes) => {
   const app = express()
 
+  app.use('/', express.static('public'))
+
   /* istanbul ignore next */
   if (env === 'production' || env === 'development') {
     app.use(cors())

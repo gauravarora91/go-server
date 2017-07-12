@@ -3,6 +3,7 @@ import { env, mongo, port, ip } from './config'
 import mongoose from './services/mongoose'
 import express from './services/express'
 import api from './api'
+const path = require('path');
 
 const app = express(api)
 const server = http.createServer(app)
