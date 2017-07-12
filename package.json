@@ -14,8 +14,7 @@
     "prod": "cross-env NODE_ENV=production nodemon -i \"*.test.js\" -r dotenv-safe/config .",
     "lint": "eslint src",
     "docs": "apidoc -i src -o public/docs && apidoc-markdown -p public/docs -o DOCS.md",
-    "postdocs": "opn public/docs/index.html",
-		"herokudocs": "./node_modules/apidoc/bin/apidoc -i src -o public/docs"
+    "postdocs": "opn public/docs/index.html"
   },
   "jest": {
     "testEnvironment": "node",
