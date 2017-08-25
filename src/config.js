@@ -54,7 +54,7 @@ const config = {
   },
   development: {
     mongo: {
-      uri: 'mongodb://localhost/govioletwhite',
+      uri: 'mongodb://rishabh:rishabh@ds155582.mlab.com:55582/heroku_qshmm5q8',
       options: {
         debug: true
       }
