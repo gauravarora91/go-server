@@ -7,6 +7,12 @@
 	- [Authenticate with Facebook](#authenticate-with-facebook)
 	- [Authenticate with Google](#authenticate-with-google)
 	
+- [Comments](#comments)
+	- [Create comments](#create-comments)
+	- [Delete comments](#delete-comments)
+	- [Retrieve comments](#retrieve-comments)
+	- [Update comments](#update-comments)
+	
 - [Feed](#feed)
 	- [Create feed](#create-feed)
 	- [Delete feed](#delete-feed)
@@ -76,6 +82,69 @@
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>Google user accessToken.</p>							|
+
+# Comments
+
+## Create comments
+
+
+
+	POST /comment
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| feed			| 			|  <p>Comments's feed.</p>							|
+| comment			| 			|  <p>Comments's comment.</p>							|
+
+## Delete comments
+
+
+
+	DELETE /comment/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+
+## Retrieve comments
+
+
+
+	GET /comment
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Update comments
+
+
+
+	PUT /comment/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| feed			| 			|  <p>Comments's feed.</p>							|
+| comment			| 			|  <p>Comments's comment.</p>							|
 
 # Feed
 
