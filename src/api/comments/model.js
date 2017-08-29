@@ -27,7 +27,8 @@ commentsSchema.methods = {
       user: this.user.view(full),
       feed: this.feed,
       comment: this.comment,
-      createdAt: this.createdAt,
+      // Changed createdAt to commentAt bcoz of mergedList in  react Feed.js
+      commentAt: this.createdAt,
       updatedAt: this.updatedAt
     }
 
