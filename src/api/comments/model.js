@@ -23,7 +23,7 @@ commentsSchema.methods = {
   view (full) {
     const view = {
       // simple view
-      id: this.id,
+      commentId: this.id,
       user: this.user.view(full),
       feed: this.feed,
       comment: this.comment,
