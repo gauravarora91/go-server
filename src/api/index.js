@@ -4,6 +4,7 @@ import auth from './auth'
 import passwordReset from './password-reset'
 import feed from './feed'
 import comments from './comments'
+import event from './event'
 
 const router = new Router()
 
@@ -35,5 +36,6 @@ router.use('/auth', auth)
 router.use('/password-resets', passwordReset)
 router.use('/feeds', feed)
 router.use('/comment', comments)
+router.use('/events', event)
 
 export default router
