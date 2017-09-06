@@ -79,7 +79,7 @@ const uploadResizedPhotos = image => {
 
 export const updatePhoto = ({ user, params, file }, res, next) =>
   Feed.findById(params.id)
-    .then(notFound(res))
+    //.then(notFound(res))
     .then(authorOrAdmin(res, user, 'user'))
     .then(feed => {
       if (!feed) return null
