@@ -4,10 +4,10 @@ import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
 import { create, index, show, update, destroy } from './controller'
 import { schema } from './model'
-export Comments, { schema } from './model'
+export Comment, { schema } from './model'
 
 const router = new Router()
-const { feed, comment } = schema.tree
+const { feedId, text } = schema.tree
 
 /**
  * @api {post} /comment Create comments
@@ -22,7 +22,7 @@ const { feed, comment } = schema.tree
  * @apiError 404 Comments not found.
  * @apiError 401 user access only.
  */
-router.post('/', token({ required: true }), body({ feed, comment }), create)
+router.post('/', token({ required: true }), body({ feedId, text }), create)
 
 /**
  * @api {get} /comment Retrieve comments
@@ -68,7 +68,7 @@ router.get('/:id', token({ required: true }), show)
  * @apiError 404 Comments not found.
  * @apiError 401 user access only.
  */
-router.put('/:id', token({ required: true }), body({ feed, comment }), update)
+router.put('/:id', token({ required: true }), body({ feedId, text }), update)
 
 /**
  * @api {delete} /comment/:id Delete comments

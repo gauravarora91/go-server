@@ -18,6 +18,14 @@ export const create = ({ user, bodymen: { body } }, res, next) => {
 export const index = ({ querymen: { query, select, cursor } }, res, next) => {
   Feed.find(query, select, cursor)
     .populate("user")
+    .populate("commentsId")
+    .populate({
+      path: "commentsId",
+      populate: {
+        path: "user",
+        model: "User"
+      }
+    })
     .then(feeds => feeds.map(feed => feed.view()))
     .then(feeds => _.sortBy(feeds, ["-createdAt"]))
     .then(success(res))
