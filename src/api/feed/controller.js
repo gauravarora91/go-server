@@ -9,12 +9,12 @@ import { Feed } from ".";
 export const create = ({ user, bodymen: { body } }, res, next) => {
   console.log(body);
   let regex = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
-  let watchUrl = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?[\w\?=]*)?/
+  let watchUrl = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
   if (typeof body.text !== "undefined") {
     if (body.text.match(regex)) {
       if (body.text.match(watchUrl)) {
         console.log("in");
-        let url = regex.exec(body.text);
+        let url = regex.exec(body.text)[0];
         body.text = body.text.replace(regex, "");
         body.type = "video";
         body.url = url;
