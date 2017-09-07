@@ -79,7 +79,14 @@ router.get('/:id', show)
  * @apiError 404 Event not found.
  */
 router.put('/:id', body({ name, descriptionShort, descriptionLong, pledgedAmount, images }), update)
-router.put('/:id/backer', body({ amount }), addBacker)
+/*
+* @api {put} /events/:id/backer add backers event
+* @apiName UpdateEvent
+* @apiGroup Event
+*/
+router.put('/:id/backer', token({ required: true }), body({ amount }), addBacker)
+// router.put('/:id/editBacker', token({ required: true }), body({ amount }), editBacker)
+
 router.put('/:id/reward', body({ amount, description }), addReward)
 
 /**
