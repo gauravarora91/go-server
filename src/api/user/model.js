@@ -44,7 +44,6 @@ const userSchema = new Schema(
       type: String,
       trim: true
     }
-
   },
   {
     timestamps: true
@@ -53,7 +52,10 @@ const userSchema = new Schema(
 
 userSchema.path("email").set(function(email) {
   if (!this.picture || this.picture.indexOf("https://gravatar.com") === 0) {
-    const hash = crypto.createHash("md5").update(email).digest("hex");
+    const hash = crypto
+      .createHash("md5")
+      .update(email)
+      .digest("hex");
     this.picture = `https://gravatar.com/avatar/${hash}?d=identicon`;
   }
 
@@ -102,7 +104,6 @@ userSchema.methods = {
 
 userSchema.statics = {
   roles,
-
   createFromService({ service, id, email, name, picture }) {
     return this.findOne({ $or: [{ [`services.${service}`]: id }, { email }] }).then(user => {
       if (user) {
