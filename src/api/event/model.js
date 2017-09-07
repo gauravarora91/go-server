@@ -1,15 +1,16 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Schema } from "mongoose";
 
 /* Sub schema for backer */
 const backerSchema = new Schema({
   user: {
     type: Schema.ObjectId,
-    unique: true
+    ref: "User",
+    required: true
   },
   amount: {
     type: Number
   }
-})
+});
 
 /* Sub schema for rewards */
 const options = new Schema({
@@ -19,13 +20,13 @@ const options = new Schema({
   amount: {
     type: Number
   }
-})
+});
 
 const eventSchema = new Schema(
   {
     createdBy: {
       type: Schema.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true
     },
     name: {
@@ -55,14 +56,14 @@ const eventSchema = new Schema(
   {
     timestamps: true
   }
-)
+);
 
 eventSchema.methods = {
-  view (full) {
+  view(full) {
     const view = {
       // simple view
       id: this.id,
-      createdBy: this.createdBy.view(full),
+      createdBy: this.createdBy,
       name: this.name,
       descriptionShort: this.descriptionShort,
       descriptionLong: this.descriptionLong,
@@ -73,18 +74,18 @@ eventSchema.methods = {
       updatedAt: this.updatedAt,
       backer: this.backer,
       rewards: this.rewards
-    }
+    };
 
     return full
       ? {
-        ...view
+          ...view
           // add properties for a full view
-      }
-      : view
+        }
+      : view;
   }
-}
+};
 
-const model = mongoose.model('Event', eventSchema)
+const model = mongoose.model("Event", eventSchema);
 
-export const schema = model.schema
-export default model
+export const schema = model.schema;
+export default model;
