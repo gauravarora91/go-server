@@ -1,37 +1,46 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Schema } from "mongoose";
 
-const feedSchema = new Schema({
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User',
-    required: true
+const feedSchema = new Schema(
+  {
+    user: {
+      type: Schema.ObjectId,
+      ref: "User",
+      required: true
+    },
+    commentsId: [
+      {
+        type: Schema.ObjectId,
+        ref: "Comment"
+      }
+    ],
+    type: {
+      type: String
+    },
+    url: {
+      type: String
+    },
+    category: {
+      type: String
+    },
+    text: {
+      type: String
+    },
+    image: {
+      small: String,
+      medium: String,
+      large: String
+    },
+    slug: {
+      type: String
+    }
   },
-  type: {
-    type: String
-  },
-  url: {
-    type: String
-  },
-  category: {
-    type: String
-  },
-  text: {
-    type: String
-  },
-  image: {
-    small: String,
-    medium: String,
-    large: String
-  },
-  slug: {
-    type: String
+  {
+    timestamps: true
   }
-}, {
-  timestamps: true
-})
+);
 
 feedSchema.methods = {
-  view (full) {
+  view(full) {
     const view = {
       // simple view
       id: this.id,
@@ -42,18 +51,21 @@ feedSchema.methods = {
       text: this.text,
       image: this.image,
       slug: this.slug,
+      commentsId: this.commentsId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
-    }
+    };
 
-    return full ? {
-      ...view
-      // add properties for a full view
-    } : view
+    return full
+      ? {
+          ...view
+          // add properties for a full view
+        }
+      : view;
   }
-}
+};
 
-const model = mongoose.model('Feed', feedSchema)
+const model = mongoose.model("Feed", feedSchema);
 
-export const schema = model.schema
-export default model
+export const schema = model.schema;
+export default model;
