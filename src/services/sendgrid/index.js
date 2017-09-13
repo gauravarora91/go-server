@@ -1,31 +1,17 @@
-// import sendgrid, { mail as helper } from 'sendgrid'
-import nodemailer from "nodemailer";
+import sendgrid, { mail as helper } from "sendgrid";
 import { sendgridKey, defaultEmail } from "../../config";
 
-var transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "govioletwhite123@gmail.com",
-    pass: "govioletwhite"
-  }
-});
-
 export const sendMail = ({ fromEmail = defaultEmail, toEmail, subject, content, contentType = "text/html" }) => {
-  fromEmail = fromEmail;
-  toEmail = toEmail;
-  content = content;
-  subject = subject;
-
-  var mailOptions = {
-    from: fromEmail,
-    to: toEmail,
-    subject: subject,
-    html: content
-  };
-
-  const request = transporter.sendMail(mailOptions, (err, info) => {
-    if (err) console.log(err);
+  fromEmail = new helper.Email(fromEmail);
+  toEmail = new helper.Email(toEmail);
+  content = new helper.Content(contentType, content);
+  const mail = new helper.Mail(fromEmail, subject, toEmail, content);
+  const sg = sendgrid(sendgridKey);
+  const request = sg.emptyRequest({
+    method: "POST",
+    path: "/v3/mail/send",
+    body: mail.toJSON()
   });
 
-  return request;
+  return sg.API(request);
 };
