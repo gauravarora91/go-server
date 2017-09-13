@@ -13,6 +13,13 @@
 	- [Retrieve comments](#retrieve-comments)
 	- [Update comments](#update-comments)
 	
+- [Event](#event)
+	- [Create event](#create-event)
+	- [Delete event](#delete-event)
+	- [Retrieve event](#retrieve-event)
+	- [Retrieve events](#retrieve-events)
+	- [Update event](#update-event)
+	
 - [Feed](#feed)
 	- [Create feed](#create-feed)
 	- [Delete feed](#delete-feed)
@@ -117,7 +124,7 @@
 
 
 
-	GET /comment
+	GET /comment/:id
 
 
 ### Parameters
@@ -125,11 +132,6 @@
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>user access token.</p>							|
-| q			| String			| **optional** <p>Query to search.</p>							|
-| page			| Number			| **optional** <p>Page number.</p>							|
-| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
-| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
-| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
 
 ## Update comments
 
@@ -145,6 +147,82 @@
 | access_token			| String			|  <p>user access token.</p>							|
 | feed			| 			|  <p>Comments's feed.</p>							|
 | comment			| 			|  <p>Comments's comment.</p>							|
+
+# Event
+
+## Create event
+
+
+
+	POST /events
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+| name			| 			|  <p>Event's name.</p>							|
+| descriptionShort			| 			|  <p>Event's descriptionShort.</p>							|
+| descriptionLong			| 			|  <p>Event's descriptionLong.</p>							|
+| pledgedAmount			| 			|  <p>Event's pledgedAmount.</p>							|
+| images			| 			|  <p>Event's images.</p>							|
+| time			| 			|  <p>Event's time.</p>							|
+
+## Delete event
+
+
+
+	DELETE /events/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+
+## Retrieve event
+
+
+
+	GET /events/:id
+
+
+## Retrieve events
+
+
+
+	GET /events
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Update event
+
+
+
+	PUT /events/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| name			| 			|  <p>Event's name.</p>							|
+| descriptionShort			| 			|  <p>Event's descriptionShort.</p>							|
+| descriptionLong			| 			|  <p>Event's descriptionLong.</p>							|
+| pledgedAmount			| 			|  <p>Event's pledgedAmount.</p>							|
+| images			| 			|  <p>Event's images.</p>							|
+| time			| 			|  <p>Event's time.</p>							|
 
 # Feed
 

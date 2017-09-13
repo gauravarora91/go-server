@@ -25,7 +25,7 @@ const commentSchema = new Schema(
 commentSchema.methods = {
   view(full) {
     let view = {};
-    let fields = ["user", "feedId", "text", "_id"];
+    let fields = ["user", "feedId", "text", "_id", "createdAt", "updatedAt"];
     if (full) {
       fields = [...fields];
     }

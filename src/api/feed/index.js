@@ -6,7 +6,8 @@ import { token } from '../../services/passport'
 import { create, index, show, update, destroy, updatePhoto } from './controller'
 import { schema } from './model'
 export Feed, { schema } from './model'
-
+const { check, validationResult } = require('express-validator/check');
+const { matchedData } = require('express-validator/filter');
 const router = new Router()
 const upload = multer({
   limits: {
@@ -35,6 +36,22 @@ const { type, url, category, text, image, slug } = schema.tree
 router.post('/',
   token({ required: true }),
   body({ type, url, category, text, image, slug }),
+  [
+    check('type')
+    .exists()
+    .withMessage('Type Of The Feed Is Required'),
+
+    check('text')
+    .exists()
+    .withMessage('The Feed Required Some Text')
+  ],
+  (req, res, next)=> {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.mapped() });
+    }
+    next()
+  },
   create)
 
 /**
