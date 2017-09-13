@@ -21,7 +21,7 @@ export const create = ({ bodymen: { body: { email, link } } }, res, next) =>
     `;
       return sendMail({ toEmail: email, subject: "go - Password Reset", content });
     })
-    .then(response => (response ? console.log(response) : null))
+    .then(response => (response ? res.send(response).end() : null))
     .catch(next);
 
 export const show = ({ params: { token } }, res, next) =>
