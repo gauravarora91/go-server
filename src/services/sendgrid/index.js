@@ -22,7 +22,10 @@ export const sendMail = ({ fromEmail = defaultEmail, toEmail, subject, content, 
     subject: subject,
     html: content
   };
-  transporter.sendMail(mailOptions, err => {
+
+  const request = transporter.sendMail(mailOptions, (err, info) => {
     if (err) console.log(err);
   });
+
+  return request;
 };
