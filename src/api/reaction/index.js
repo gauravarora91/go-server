@@ -7,7 +7,7 @@ import { schema } from './model'
 export Reaction, { schema } from './model'
 
 const router = new Router()
-const { feedId, likes } = schema.tree
+const { feedId, liked } = schema.tree
 
 /**
  * @api {post} /reactions Create reaction
@@ -24,7 +24,7 @@ const { feedId, likes } = schema.tree
  */
 router.post('/',
   token({ required: true }),
-  body({ feedId, likes }),
+  body({ feedId, liked }),
   create)
 
 /**
@@ -65,7 +65,7 @@ router.get('/:id',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ feedId, likes }),
+  body({ feedId, liked }),
   update)
 
 /**

@@ -2,18 +2,20 @@ import mongoose, { Schema } from "mongoose";
 
 const reactionSchema = new Schema(
   {
-    userId: {
+    user: {
       type: Schema.ObjectId,
       ref: "User",
       required: true
     },
     feedId: {
       type: Schema.ObjectId,
+      ref: "Feed",
       required: true
     },
-    likes: {
-      type: Number,
-      required: true
+    liked: {
+      type: Boolean,
+      required: true,
+      default: false
     }
   },
   {
@@ -26,9 +28,9 @@ reactionSchema.methods = {
     const view = {
       // simple view
       id: this.id,
-      userId: this.userId.view(full),
+      user: this.user.view(),
       feedId: this.feedId,
-      likes: this.likes,
+      liked: this.liked,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     };

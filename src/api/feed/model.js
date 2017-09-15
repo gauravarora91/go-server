@@ -13,6 +13,12 @@ const feedSchema = new Schema(
         ref: "Comment"
       }
     ],
+    reactionId: [
+      {
+        type: Schema.ObjectId,
+        ref: "Reaction"
+      }
+    ],
     type: {
       type: String
     },
@@ -52,6 +58,7 @@ feedSchema.methods = {
       image: this.image,
       slug: this.slug,
       commentsId: this.commentsId,
+      reactionId: this.reactionId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     };
