@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, addReward, addBacker } from './controller'
+import { create, index, show, update, destroy, addReward, addBacker, updateReward } from './controller'
 import { schema } from './model'
 export Event, { schema } from './model'
 
@@ -62,7 +62,7 @@ router.get('/', query(), index)
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Event not found.
  */
-router.get('/:id', show)
+// router.get('/:id', show)
 
 /**
  * @api {put} /events/:id Update event
@@ -81,13 +81,24 @@ router.get('/:id', show)
 router.put('/:id', body({ name, descriptionShort, descriptionLong, pledgedAmount, images }), update)
 /*
 * @api {put} /events/:id/backer add backers event
-* @apiName UpdateEvent
+* @apiName addBacker
 * @apiGroup Event
 */
 router.put('/:id/backer', token({ required: true }), body({ amount }), addBacker)
-// router.put('/:id/editBacker', token({ required: true }), body({ amount }), editBacker)
+/*
+* @api {put} /events/:id/reward add backers event
+* @apiName addReward
+* @apiGroup Event
+*/
 
 router.put('/:id/reward', body({ amount, description }), addReward)
+
+/*
+* @api {put} /events/:id/reward/edit add backers event
+* @apiName update rewards
+* @apiGroup Event
+*/
+router.put('/:id/reward/edit', body({ amount, description }), updateReward)
 
 /**
  * @api {delete} /events/:id Delete event
