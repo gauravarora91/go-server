@@ -62,7 +62,7 @@ router.get('/', query(), index)
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Event not found.
  */
-// router.get('/:id', show)
+router.get('/:id', show)
 
 /**
  * @api {put} /events/:id Update event
