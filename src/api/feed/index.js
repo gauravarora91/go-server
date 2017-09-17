@@ -3,7 +3,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, updatePhoto } from './controller'
+import { create, index, show, update, destroy, updatePhoto, reaction } from './controller'
 import { schema } from './model'
 export Feed, { schema } from './model'
 const { check, validationResult } = require('express-validator/check');
@@ -130,5 +130,9 @@ router.put('/:id',
 router.delete('/:id',
   token({ required: true }),
   destroy)
+
+  router.put('/:id/reaction',
+  token({required: true}),
+  reaction)
 
 export default router

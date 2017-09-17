@@ -40,15 +40,6 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
         model: "User"
       }
     })
-    .populate("reactionId")
-    .populate({
-      path: "reactionId",
-      populate: {
-        path: "user",
-        model: "User",
-        select: "name _id picture"
-      }
-    })
     .then(feeds => feeds.map(feed => feed.view()))
     .then(feeds => _.sortBy(feeds, ["-createdAt"]))
     .then(success(res))
@@ -69,6 +60,26 @@ export const update = ({ user, bodymen: { body }, params }, res, next) =>
     .then(notFound(res))
     .then(authorOrAdmin(res, user, "user"))
     .then(feed => (feed ? _.merge(feed, body).save() : null))
+    .then(feed => (feed ? feed.view(true) : null))
+    .then(success(res))
+    .catch(next);
+
+export const reaction = ({ user, params }, res, next) =>
+  Feed.findById(params.id)
+    .then(notFound(res))
+    .then(feed => {
+      const reactionId = feed.reactionId;
+      const index = reactionId.indexOf(user.id);
+      if (index > -1) {
+        reactionId.splice(index, 1);
+        feed.save();
+        return feed;
+      } else {
+        feed.reactionId.push(user.id);
+        feed.save();
+        return feed;
+      }
+    })
     .then(feed => (feed ? feed.view(true) : null))
     .then(success(res))
     .catch(next);

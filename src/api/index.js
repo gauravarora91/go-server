@@ -1,12 +1,10 @@
-import { Router } from 'express'
-import user from './user'
-import auth from './auth'
-import passwordReset from './password-reset'
-import feed from './feed'
-import comment from './comment'
-import event from './event'
-import reaction from './reaction'
-
+import { Router } from "express";
+import user from "./user";
+import auth from "./auth";
+import passwordReset from "./password-reset";
+import feed from "./feed";
+import comment from "./comment";
+import event from "./event";
 
 const router = new Router();
 
@@ -39,8 +37,6 @@ router.use("/auth", auth);
 router.use("/password-resets", passwordReset);
 router.use("/feeds", feed);
 router.use("/comments", comment);
-router.use('/events', event)
-router.use('/reactions', reaction)
-
+router.use("/events", event);
 
 export default router;
