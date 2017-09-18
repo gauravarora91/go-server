@@ -40,7 +40,7 @@ const {
 router.post(
   '/',
   token({ required: true, roles: ['admin'] }),
-  body({ name, descriptionShort, descriptionLong, pledgedAmount, images, time, backer, rewards }),
+  body({ name, descriptionShort, descriptionLong, pledgedAmount, images, time, backer:[Object], rewards:[Object] }),
   create
 )
 
