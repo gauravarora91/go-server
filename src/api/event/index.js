@@ -84,7 +84,7 @@ router.put('/:id', body({ name, descriptionShort, descriptionLong, pledgedAmount
 * @apiName addBacker
 * @apiGroup Event
 */
-router.put('/:id/backer', token({ required: true }), body({ amount }), addBacker)
+router.put('/:id/backer', body({ amount }), addBacker)
 /*
 * @api {put} /events/:id/reward add backers event
 * @apiName addReward

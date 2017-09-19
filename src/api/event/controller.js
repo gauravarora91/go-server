@@ -64,26 +64,32 @@ export const addBacker = ({ user, bodymen: { body }, params }, res, next) => {
 };
 
 export const addReward = ({ bodymen: { body }, params }, res, next) => {
-  Event.findOne({ _id: params.id }, (err, event) => {
-    if (err) {
-      return next(err);
-    }
-    if (event) {
-      console.log(event);
-      event.rewards.push({
-        amount: body.amount,
-        description: body.description
-      });
-
-      event.save(function(err) {
-        if (err) {
-          return next(err);
-        } else {
-          console.log("success");
-        }
-      });
-    }
-  })
+  console.log(body);
+  Event.findOneAndUpdate(
+    { _id: params.id },
+    { $push: { rewards: { amount: body.amount, description: body.description } } }
+  )
+    //   (err, event) => {
+    //     // event.rewards.push({
+    //     //   amount: body.amount,
+    //     //   description: body.description
+    //     // });
+    //     if (err) {
+    //       console.log(err);
+    //     } else {
+    //       console.log(event);
+    //     }
+    //     return event;
+    //     // event.save(function(err) {
+    //     //   if (err) {
+    //     //     return next(err);
+    //     //   } else {
+    //     //     console.log("success");
+    //     //   }
+    //     // });
+    //   }
+    // )
+    // .then(event => (event ? event.view(true) : null))
     .then(success(res))
     .catch(next);
 };

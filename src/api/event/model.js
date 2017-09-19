@@ -52,7 +52,7 @@ const eventSchema = new Schema(
       default: Date.now
     },
     backer: backerSchema,
-    rewards: rewardSchema
+    rewards: [rewardSchema]
   },
   {
     timestamps: true
