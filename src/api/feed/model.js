@@ -16,7 +16,8 @@ const feedSchema = new Schema(
     reactionId: [
       {
         type: Schema.ObjectId,
-        ref: "Reaction"
+        required: true,
+        unique: true
       }
     ],
     type: {
@@ -57,8 +58,8 @@ feedSchema.methods = {
       text: this.text,
       image: this.image,
       slug: this.slug,
-      commentsId: this.commentsId,
       reactionId: this.reactionId,
+      commentsId: this.commentsId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     };

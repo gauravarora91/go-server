@@ -40,7 +40,7 @@ const {
 router.post(
   '/',
   token({ required: true, roles: ['admin'] }),
-  body({ name, descriptionShort, descriptionLong, pledgedAmount, images, time, backer, rewards }),
+  body({ name, descriptionShort, descriptionLong, pledgedAmount, images, time, backer:[Object], rewards:[Object] }),
   create
 )
 
@@ -62,7 +62,7 @@ router.get('/', query(), index)
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Event not found.
  */
-// router.get('/:id', show)
+router.get('/:id', show)
 
 /**
  * @api {put} /events/:id Update event
@@ -84,7 +84,7 @@ router.put('/:id', body({ name, descriptionShort, descriptionLong, pledgedAmount
 * @apiName addBacker
 * @apiGroup Event
 */
-router.put('/:id/backer', token({ required: true }), body({ amount }), addBacker)
+router.put('/:id/backer', body({ amount }), addBacker)
 /*
 * @api {put} /events/:id/reward add backers event
 * @apiName addReward

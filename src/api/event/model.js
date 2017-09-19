@@ -13,7 +13,7 @@ const backerSchema = new Schema({
 });
 
 /* Sub schema for rewards */
-const options = new Schema({
+const rewardSchema = new Schema({
   description: {
     type: String
   },
@@ -30,7 +30,8 @@ const eventSchema = new Schema(
       required: true
     },
     name: {
-      type: String
+      type: String,
+      required: true
     },
     descriptionShort: {
       type: String
@@ -50,8 +51,8 @@ const eventSchema = new Schema(
       type: Date,
       default: Date.now
     },
-    backer: [backerSchema],
-    rewards: [options]
+    backer: backerSchema,
+    rewards: [rewardSchema]
   },
   {
     timestamps: true
