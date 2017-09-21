@@ -52,7 +52,25 @@ const eventSchema = new Schema(
       default: Date.now
     },
     backer: backerSchema,
-    rewards: [rewardSchema]
+    rewards: [rewardSchema],
+    location: {
+      place: String,
+      lat: { type: Number, required: true },
+      long: { type: Number, required: true },
+      address: { type: String, required: true }
+    },
+    goalRequirement: {
+      type: String
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    goalCompleted: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true
@@ -74,7 +92,11 @@ eventSchema.methods = {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       backer: this.backer,
-      rewards: this.rewards
+      rewards: this.rewards,
+      location: this.location,
+      goalRequirement: this.goalRequirement,
+      goalCompleted: this.goalCompleted,
+      slug: this.slug
     };
 
     return full
