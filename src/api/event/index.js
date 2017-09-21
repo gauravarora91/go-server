@@ -82,7 +82,7 @@ router.get('/:id', show)
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Event not found.
  */
-router.put('/:id', body({ name, descriptionShort, descriptionLong, pledgedAmount, images, location,slug,goalCompleted, goalRequirement }), update)
+router.put('/:id', body({ name, descriptionShort, descriptionLong, pledgedAmount, images,time, location,slug,goalCompleted, goalRequirement }), update)
 /*
 * @api {put} /events/:id/backer add backers event
 * @apiName addBacker
