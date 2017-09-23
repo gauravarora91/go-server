@@ -7,6 +7,14 @@ const backerSchema = new Schema({
     ref: "User",
     required: true
   },
+  completed: {
+    type: Boolean,
+    default: false
+  },
+  method: {
+    type: String,
+    required: true
+  },
   amount: {
     type: Number
   }
@@ -33,11 +41,15 @@ const eventSchema = new Schema(
       type: String,
       required: true
     },
+    descriptionHeading: {
+      type: String,
+      required: true
+    },
     descriptionShort: {
       type: String
     },
     descriptionLong: {
-      type: String
+      type: Object
     },
     pledgedAmount: {
       type: Number
@@ -51,7 +63,7 @@ const eventSchema = new Schema(
       type: Date,
       default: Date.now
     },
-    backer: backerSchema,
+    backers: [backerSchema],
     rewards: [rewardSchema],
     location: {
       place: String,
@@ -86,12 +98,13 @@ eventSchema.methods = {
       name: this.name,
       descriptionShort: this.descriptionShort,
       descriptionLong: this.descriptionLong,
+      descriptionHeading: this.descriptionHeading,
       pledgedAmount: this.pledgedAmount,
       images: this.images,
       time: this.time,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      backer: this.backer,
+      backers: this.backers,
       rewards: this.rewards,
       location: this.location,
       goalRequirement: this.goalRequirement,

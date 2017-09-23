@@ -41,7 +41,7 @@ export const addBacker = ({ user, bodymen: { body }, params }, res, next) => {
         let backers = _.filter(event.backer, function(backer) {
           return backer.user == user.id;
         });
-        console.log(backers);
+
         if (backers.length > 0) {
           let amount = parseInt(backers[0].amount) + parseInt(body.amount);
           backers[0].amount = amount;
@@ -58,6 +58,15 @@ export const addBacker = ({ user, bodymen: { body }, params }, res, next) => {
         return event;
       }
     })
+    .then(event => (event ? event.view(true) : null))
+    .then(success(res))
+    .catch(next);
+};
+export const addBackerAdmin = ({ bodymen: { body }, params }, res, next) => {
+  console.log(body);
+  Event.findById(params.id)
+    .then(notFound(res))
+    .then(event => (event ? _.merge(event, body).save() : null))
     .then(event => (event ? event.view(true) : null))
     .then(success(res))
     .catch(next);
