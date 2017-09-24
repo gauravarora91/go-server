@@ -24,7 +24,8 @@ const {
   slug,
   goalCompleted,
   method,
-  id
+  user,
+  type
 } = schema.tree
 
 /**
@@ -97,7 +98,9 @@ router.put('/:id/backer', body({ amount }), addBacker)
 * @apiName addReward
 * @apiGroup Event
 */
-router.put('/:id/backer/admin', body({ backers:[Object] }), addBackerAdmin)
+// router.put('/:id/backer/admin', body({ backers:[Object] }), addBackerAdmin)
+router.put('/admin/backer/:id', body({ user,amount,method }), addBackerAdmin)
+
 router.put('/:id/reward', body({ amount, description }), addReward)
 
 /*

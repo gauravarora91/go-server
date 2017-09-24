@@ -5,9 +5,10 @@ const backerSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: "User",
+    unique: true,
     required: true
   },
-  completed: {
+  manual: {
     type: Boolean,
     default: false
   },
