@@ -4,9 +4,7 @@ import mongoose, { Schema } from "mongoose";
 const backerSchema = new Schema({
   user: {
     type: Schema.ObjectId,
-    ref: "User",
-    unique: true,
-    required: true
+    ref: "User"
   },
   manual: {
     type: Boolean,
@@ -55,10 +53,13 @@ const eventSchema = new Schema(
     pledgedAmount: {
       type: Number
     },
+    // images: {
+    //   small: String,
+    //   medium: String,
+    //   large: String
+    // },
     images: {
-      small: String,
-      medium: String,
-      large: String
+      type: String
     },
     time: {
       type: Date,
