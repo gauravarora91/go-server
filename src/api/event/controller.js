@@ -38,27 +38,37 @@ export const addBacker = ({ user, bodymen: { body }, params }, res, next) => {
           the amount entered by user
           will be added to previous amount
         */
-        let backers = _.filter(event.backer, function(backer) {
+        let backers = _.filter(event.backers, function(backer) {
           return backer.user == user.id;
         });
-        console.log(backers);
+
         if (backers.length > 0) {
           let amount = parseInt(backers[0].amount) + parseInt(body.amount);
           backers[0].amount = amount;
           event.save();
           console.log(amount);
         } else {
-          event.backer.push({ user: user, amount: body.amount });
+          event.backers.push({ user: user, amount: body.amount });
           event.save();
         }
         return event;
       } else {
-        event.backer.push({ user: user, amount: body.amount });
+        event.backers.push({ user: user, amount: body.amount });
         event.save();
         return event;
       }
     })
     .then(event => (event ? event.view(true) : null))
+    .then(success(res))
+    .catch(next);
+};
+export const addBackerAdmin = ({ bodymen: { body }, params }, res, next) => {
+  console.log(body);
+  Event.findOneAndUpdate(
+    { _id: params.id },
+    { $push: { backers: { amount: body.amount, method: body.method, user: body.user } } },
+    { new: true }
+  )
     .then(success(res))
     .catch(next);
 };

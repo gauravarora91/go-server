@@ -2,26 +2,30 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, addReward, addBacker, updateReward } from './controller'
+import { create, index, show, update, destroy, addReward, addBacker, updateReward, addBackerAdmin } from './controller'
 import { schema } from './model'
 export Event, { schema } from './model'
 
 const router = new Router()
 const {
   name,
+  descriptionHeading,
   descriptionShort,
   descriptionLong,
   pledgedAmount,
   images,
   time,
-  backer,
+  backers,
   rewards,
   amount,
   description,
   location,
   goalRequirement,
   slug,
-  goalCompleted
+  goalCompleted,
+  method,
+  user,
+  type
 } = schema.tree
 
 /**
@@ -44,7 +48,7 @@ const {
 router.post(
   '/',
   token({ required: true, roles: ['admin'] }),
-  body({ name, descriptionShort, descriptionLong, pledgedAmount, images, time,goalRequirement,slug, location:[Object], backer:[Object], rewards:[Object] }),
+  body({ name, descriptionShort, descriptionLong:[Object],descriptionHeading, pledgedAmount, images, time,goalRequirement,slug, location:[Object], backers:[Object], rewards:[Object] }),
   create
 )
 
@@ -82,7 +86,7 @@ router.get('/:id', show)
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Event not found.
  */
-router.put('/:id', body({ name, descriptionShort, descriptionLong, pledgedAmount, images,time, location,slug,goalCompleted, goalRequirement }), update)
+router.put('/:id', body({ name, descriptionShort, descriptionLong,descriptionHeading, pledgedAmount, images,time, location:[Object],slug,goalCompleted, goalRequirement,rewards:[Object] }), update)
 /*
 * @api {put} /events/:id/backer add backers event
 * @apiName addBacker
@@ -94,6 +98,8 @@ router.put('/:id/backer', body({ amount }), addBacker)
 * @apiName addReward
 * @apiGroup Event
 */
+// router.put('/:id/backer/admin', body({ backers:[Object] }), addBackerAdmin)
+router.put('/admin/backer/:id', body({ user,amount,method }), addBackerAdmin)
 
 router.put('/:id/reward', body({ amount, description }), addReward)
 
