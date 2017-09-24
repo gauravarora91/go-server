@@ -130,11 +130,12 @@ const uploadResizedPhotos = image => {
 };
 
 export const updatePhoto = ({ user, params, file }, res, next) => {
+  console.log(user)
   Feed.findById(params.id)
     // .then(notFound(res))
-    // .then(authorOrAdmin(res, user, 'user'))
+    // .then(authorOrAdmin(res, user, 'user'))    
     .then(feed => {
-      // console.log({ user, params, file });
+      console.log(feed);
       if (!feed) return null;
       removeCurrentPhotos(feed);
       return Image.read(file.buffer)

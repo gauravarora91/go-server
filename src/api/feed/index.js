@@ -38,14 +38,14 @@ router.post('/',
   body({ type, url, category, text, image, slug }),
   [
     check('type')
-    .exists()
-    .withMessage('Type Of The Feed Is Required'),
+      .exists()
+      .withMessage('Type Of The Feed Is Required'),
 
     check('text')
-    .exists()
-    .withMessage('The Feed Required Some Text')
+      .exists()
+      .withMessage('The Feed Required Some Text')
   ],
-  (req, res, next)=> {
+  (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.mapped() });
@@ -90,7 +90,7 @@ router.get('/:id',
  * @apiError 401 user access only.
  */
 router.put('/:id/image',
-  token({ required: true }),
+  //token({ required: true }),
   upload.single('data'),
   updatePhoto)
 
@@ -131,8 +131,8 @@ router.delete('/:id',
   token({ required: true }),
   destroy)
 
-  router.put('/:id/reaction',
-  token({required: true}),
+router.put('/:id/reaction',
+  token({ required: true }),
   reaction)
 
 export default router
