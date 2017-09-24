@@ -47,9 +47,7 @@ const eventSchema = new Schema(
     descriptionShort: {
       type: String
     },
-    descriptionLong: {
-      type: Object
-    },
+    descriptionLong: Schema.Types.Mixed,
     pledgedAmount: {
       type: Number
     },
