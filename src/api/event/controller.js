@@ -1,5 +1,9 @@
 import _ from "lodash";
+import Promise from "bluebird";
 import { success, notFound } from "../../services/response/";
+import { uid } from "rand-token";
+import * as s3 from "../../services/s3";
+import Image from "../../services/image";
 import { Event } from ".";
 
 export const create = ({ user, bodymen: { body } }, res, next) => {
@@ -134,3 +138,65 @@ export const destroy = ({ params }, res, next) =>
     .then(event => (event ? event.remove() : null))
     .then(success(res, 204))
     .catch(next);
+
+const removeCurrentPhotos = event => {
+  if (event.image) {
+    const sizes = Object.keys(event.image.toObject());
+    const promises = [];
+    if (sizes.length) {
+      promises.push(sizes.map(size => s3.remove(event.image[size])));
+    }
+    return Promise.all(promises);
+  }
+};
+
+const uploadResizedPhotos = image => {
+  const uniqueId = uid(24);
+  const getFileName = size => `${uniqueId}_${size}.jpg`;
+  const sizes = {
+    large: [1024, 768],
+    medium: [640, 480],
+    small: [320, 240]
+  };
+  const promises = Object.keys(sizes).reduce((object, size) => {
+    object[size] = image
+      .clone()
+      .quality(100)
+      .scaleToFit(...sizes[size])
+      .getBuffer();
+    return object;
+  }, {});
+  return Promise.props(promises).then(buffers =>
+    Promise.props(
+      Object.keys(buffers).reduce((object, size) => {
+        object[size] = s3.upload(buffers[size], getFileName(size), "image/jpeg");
+        return object;
+      }, {})
+    )
+  );
+};
+
+export const updatePhoto = ({ user, params, file }, res, next) => {
+  console.log(user);
+  Event.findById(params.id)
+    // .then(notFound(res))
+    // .then(authorOrAdmin(res, user, 'user'))
+    .then(event => {
+      console.log(event);
+      if (!event) return null;
+      removeCurrentPhotos(event);
+      return Image.read(file.buffer)
+        .then(image => {
+          event.color = image.getPredominantColorHex();
+          return uploadResizedPhotos(image);
+        })
+        .then(image => {
+          // console.log(image);
+          event.images = image;
+          return event.save();
+        });
+    })
+    .then(event => (event ? event.view(true) : null))
+    .then(success(res))
+    .catch(next);
+};

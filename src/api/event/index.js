@@ -1,8 +1,9 @@
 import { Router } from 'express'
+import multer from 'multer'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, addReward, addBacker, updateReward, addBackerAdmin } from './controller'
+import { create, index, show, update, destroy, addReward, addBacker, updateReward, addBackerAdmin,updatePhoto } from './controller'
 import { schema } from './model'
 export Event, { schema } from './model'
 
@@ -28,6 +29,11 @@ const {
   type
 } = schema.tree
 
+const upload = multer({
+  limits: {
+    fileSize: 10 * Math.pow(1024, 2) // 20MB
+  }
+})
 /**
  * @api {post} /events Create event
  * @apiName CreateEvent
@@ -121,5 +127,14 @@ router.put('/:id/reward/edit', body({ amount, description }), updateReward)
  * @apiError 401 admin access only.
  */
 router.delete('/:id', token({ required: true, roles: ['admin'] }), destroy)
+
+/**
+ * image upload
+ */
+router.put('/:id/image',
+//token({ required: true }),
+upload.single('data'),
+updatePhoto)
+
 
 export default router
