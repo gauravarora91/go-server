@@ -6,8 +6,7 @@ import { token } from '../../services/passport'
 import { create, index, show, update, destroy, updatePhoto, reaction } from './controller'
 import { schema } from './model'
 export Feed, { schema } from './model'
-const { check, validationResult } = require('express-validator/check');
-const { matchedData } = require('express-validator/filter');
+const { check, validationResult } = require("express-validator/check");
 const router = new Router()
 const upload = multer({
   limits: {
