@@ -79,27 +79,6 @@ export const addReward = ({ bodymen: { body }, params }, res, next) => {
     { _id: params.id },
     { $push: { rewards: { amount: body.amount, description: body.description } } }
   )
-    //   (err, event) => {
-    //     // event.rewards.push({
-    //     //   amount: body.amount,
-    //     //   description: body.description
-    //     // });
-    //     if (err) {
-    //       console.log(err);
-    //     } else {
-    //       console.log(event);
-    //     }
-    //     return event;
-    //     // event.save(function(err) {
-    //     //   if (err) {
-    //     //     return next(err);
-    //     //   } else {
-    //     //     console.log("success");
-    //     //   }
-    //     // });
-    //   }
-    // )
-    // .then(event => (event ? event.view(true) : null))
     .then(success(res))
     .catch(next);
 };

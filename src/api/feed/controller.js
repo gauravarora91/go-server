@@ -145,6 +145,7 @@ export const updatePhoto = ({ user, params, file }, res, next) => {
         })
         .then(image => {
           // console.log(image);
+          feed.type = "image"
           feed.image = image;
           return feed.save();
         });
