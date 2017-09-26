@@ -42,7 +42,7 @@ const eventSchema = new Schema(
     },
     descriptionHeading: {
       type: String,
-      required: true
+      // required: true
     },
     descriptionShort: {
       type: String
@@ -51,14 +51,14 @@ const eventSchema = new Schema(
     pledgedAmount: {
       type: Number
     },
-    // images: {
-    //   small: String,
-    //   medium: String,
-    //   large: String
-    // },
     images: {
-      type: String
+      small: String,
+      medium: String,
+      large: String
     },
+    // images: {
+    //   type: String
+    // },
     time: {
       type: Date,
       default: Date.now
