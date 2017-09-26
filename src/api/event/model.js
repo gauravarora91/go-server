@@ -42,7 +42,7 @@ const eventSchema = new Schema(
     },
     descriptionHeading: {
       type: String,
-      // required: true
+      required: true
     },
     descriptionShort: {
       type: String
@@ -56,9 +56,6 @@ const eventSchema = new Schema(
       medium: String,
       large: String
     },
-    // images: {
-    //   type: String
-    // },
     time: {
       type: Date,
       default: Date.now
