@@ -6,7 +6,8 @@ import { token } from '../../services/passport'
 import { create, index, show, update, destroy, addReward, addBacker, updateReward, addBackerAdmin,updatePhoto } from './controller'
 import { schema } from './model'
 export Event, { schema } from './model'
-
+const { check, validationResult } = require('express-validator/check');
+const { matchedData, sanitize } = require('express-validator/filter');
 const router = new Router()
 const {
   name,
@@ -55,9 +56,57 @@ router.post(
   '/',
   token({ required: true, roles: ['admin'] }),
   body({ name, descriptionShort, descriptionLong:[Object],descriptionHeading, pledgedAmount, images, time,goalRequirement,slug, location:[Object], backers:[Object], rewards:[Object] }),
-  create
-)
+  [
+    check("name")
+      .isLength({min:2, max:150}).withMessage('Name Must Be Atleast 2 Characters'),
+    check("descriptionHeading")
+    .isLength({min:2, max:150}).withMessage('Must Be Valid Heading'),
+    check("descriptionShort")
+    .isLength({min:2, max:150}).withMessage('Must Be Valid Description'),
+    check("descriptionLong")
+    .exists().withMessage('Please Enter A Valid Description Detail'),
+    check("pledgedAmount")
+    .isLength({ min: 2 })
+    .matches(/\d/).withMessage('Please Enter A Valid Pledged Amount'),
+    check("time")
+    .isAfter().withMessage('Please Enter A Valid Date'),
+    check("location.place")
+    .isLength({min: 2, max: 100})
+    .withMessage('Place Name Is Not Valid'),
+    check("location.address")
+    .isLength({min: 2, max: 100})
+    .withMessage('Address Is Not Valid'),
+    check("location.lat")
+    .matches(/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/)
+    .withMessage('Enter Valid Latitude-longitude'),
+    check('location.long')
+    .matches(/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/)
+    .withMessage('Enter Valid Latitude-longitude'),
+    check("goalRequirement")
+    .isLength({min:5, max:100})
+    .withMessage("Goal Requirement Must Be Atleast 5 Characters"),
+    check("rewards.*.description")
+    .isLength({min:5 , max:100})
+    .withMessage("Reward Description Must Be Atleast 5 Characters"),
+    check("rewards.*.amount")
+    .isLength({min:1})
+    .matches(/\d/)
+    .withMessage("Enter A Valid Reward Amount")
 
+
+  ], (req, res, next) => {
+    const errors = validationResult(req);
+    console.log(req);
+    console.log(errors)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.mapped() });
+      console.log(req);
+      console.log(errors)
+    }
+    next();
+  },
+  create
+);
 /**
  * @api {get} /events Retrieve events
  * @apiName RetrieveEvents
@@ -92,7 +141,32 @@ router.get('/:id', show)
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Event not found.
  */
-router.put('/:id', body({ name, descriptionShort, descriptionLong,descriptionHeading, pledgedAmount, images,time, location:[Object],slug,goalCompleted, goalRequirement,rewards:[Object] }), update)
+router.put('/:id', body({ name, descriptionShort, descriptionLong,descriptionHeading, pledgedAmount, images,time, location:[Object],slug,goalCompleted, goalRequirement,rewards:[Object] }),  [
+  check("name")
+    .isLength({min:2, max:150}).withMessage('Must Be Valid Name'),
+  check("descriptionHeading")
+  .isLength({min:2, max:150}).withMessage('Must Be Valid Heading'),
+  check("descriptionShort")
+  .isLength({min:2, max:150}).withMessage('Must Be Valid Description'),
+  check("descriptionLong")
+  .exists().withMessage('Please Enter A Valid Description Detail'),
+  check("pledgedAmount")
+  .isLength({ min: 2 })
+  .matches(/\d/).withMessage('Please Enter A Valid Pledged Amount'),
+  check("time")
+  .isAfter().withMessage('Please Enter A Valid Date')
+
+], (req, res, next) => {
+  const errors = validationResult(req);
+  console.log(req);
+  console.log(errors)
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.mapped() });
+    console.log(req);
+    console.log(errors)
+  }
+  next();
+}, update)
 /*
 * @api {put} /events/:id/backer add backers event
 * @apiName addBacker
