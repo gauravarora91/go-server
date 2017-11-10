@@ -2,9 +2,13 @@ import mongoose, { Schema } from "mongoose";
 
 /* Sub schema for backer */
 const backerSchema = new Schema({
-  user: {
+  id: {
     type: Schema.ObjectId,
     ref: "User"
+  },
+  user: {
+    type: Schema.ObjectId,
+    required: true
   },
   manual: {
     type: Boolean,
@@ -12,7 +16,7 @@ const backerSchema = new Schema({
   },
   method: {
     type: String,
-    required: true
+    default: "card"
   },
   amount: {
     type: Number

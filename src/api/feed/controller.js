@@ -130,10 +130,10 @@ const uploadResizedPhotos = image => {
 };
 
 export const updatePhoto = ({ user, params, file }, res, next) => {
-  console.log(user)
+  console.log(user);
   Feed.findById(params.id)
     // .then(notFound(res))
-    // .then(authorOrAdmin(res, user, 'user'))    
+    // .then(authorOrAdmin(res, user, 'user'))
     .then(feed => {
       console.log(feed);
       if (!feed) return null;
@@ -145,7 +145,7 @@ export const updatePhoto = ({ user, params, file }, res, next) => {
         })
         .then(image => {
           // console.log(image);
-          feed.type = "image"
+          feed.type = "image";
           feed.image = image;
           return feed.save();
         });
