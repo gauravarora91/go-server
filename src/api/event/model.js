@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 /* Sub schema for backer */
 const backerSchema = new Schema({
-  id: {
+  createdBy: {
     type: Schema.ObjectId,
     ref: "User"
   },

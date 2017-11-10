@@ -5,7 +5,7 @@ import passwordReset from "./password-reset";
 import feed from "./feed";
 import comment from "./comment";
 import event from "./event";
-
+import payment from "./payment";
 const router = new Router();
 
 /**
@@ -38,5 +38,5 @@ router.use("/password-resets", passwordReset);
 router.use("/feeds", feed);
 router.use("/comments", comment);
 router.use("/events", event);
-
+router.use("/payment", payment);
 export default router;
